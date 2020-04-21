@@ -20,6 +20,8 @@ void test_pointer(void);
 void test_pointer_4(void);
 void getchar_to_file(const char *filename);
 void postchar_to_file(void);
+void getline_to_file(const char *filename);
+void putline_to_file(void);
 
 // struct
 typedef struct stu {

@@ -14,7 +14,7 @@
 
 void test_pointer()
 {
-    int func_num = 5;
+    int func_num = 6;
     switch (func_num) {
         case 1:
             test_pointer_1();
@@ -31,10 +31,55 @@ void test_pointer()
         case 5:
             postchar_to_file();
             break;
+        case 6:
+            putline_to_file();
+            break;
         default:
             two_level_pointer();
             break;
     }
+}
+
+// 一行一行读取文件
+void getline_to_file(const char *filename)
+{
+    FILE *fp;
+    char buf[1024];
+    
+    if ( (fp = fopen(filename, "rt")) == NULL ) {
+        printf("Cannot open file!\n");
+        exit(1);
+    }
+    while (fgets(buf, sizeof(buf), fp)) {
+        printf("%s\n", buf);
+    }
+    fclose(fp);
+}
+
+void putline_to_file()
+{
+    FILE *fp;
+    char buf[1024] = {0};
+    char *filename = "/Users/yangfeilong/putline_to_file.txt";
+    
+    if ( (fp = fopen(filename, "wt")) == NULL ) {
+        printf("Cannot open file!\n");
+        exit(1);
+    }
+    
+    printf("Input a string:");
+    scanf("%s", buf);// gets(buf);
+    buf[strlen(buf)+1] = '\n';
+    
+    fputs(buf, fp);
+    if (ferror(fp)) {
+        puts("文件写入失败");
+    }else{
+        puts("文件写入成功");
+    }
+    fclose(fp);
+    
+    getline_to_file(filename);
 }
 
 // 读取文件，并一个字符一个字符的输出
@@ -81,8 +126,12 @@ void postchar_to_file()
     }else{
         puts("文件写入成功");
     }
+    putchar('\n');
 
     fclose(fp);
+    
+    printf("读取文件【%s】...\n", file);
+    getchar_to_file(file);
 }
 
 void test_pointer_4()
